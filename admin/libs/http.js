@@ -33,9 +33,14 @@
 })(window)
 ;(function() {
     $.ajaxSetup({
-        beforeSend(xhr) {
-            xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+        // 方法一：发送前设置请求头token字段
+        headers: {
+            'Authorization': localStorage.getItem('token')
         },
+        // 方法二：发送前设置请求头token字段
+        // beforeSend(xhr) {
+        //     xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+        // },
         error(xhr,status,error) {
             if(error == 'Forbidden') {
                 alert('请先登录');
