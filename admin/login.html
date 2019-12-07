@@ -58,6 +58,7 @@
       </div>
     </div>
 </body>
+<script src="./libs/http.js"></script>
 <script>
   $(function() {
     $('.input_sub').on('click', function(e) {
@@ -72,7 +73,8 @@
         return;
       }
       $.ajax({
-        url: 'http://localhost:8080/api/v1/admin/user/login',
+        // url: 'http://localhost:8080/api/v1/admin/user/login',
+        url: window.pathObj['user-login'],
         type: 'post',
         data: {
           username: username,
