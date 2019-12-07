@@ -28,4 +28,21 @@
     }
     // 暴露接口
     w.pathObj = pathObj;
+
+   
 })(window)
+;(function() {
+    $.ajaxSetup({
+        beforeSend(xhr) {
+            xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+        },
+        error(xhr,status,error) {
+            if(error == 'Forbidden') {
+                alert('请先登录');
+                // 跳转login
+                location.href = './login.html';
+            }
+        }
+
+    });
+})()
