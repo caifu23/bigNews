@@ -4,6 +4,9 @@ $(function() {
 $('.level01').on('click', function() {
     //排他
     $(this).addClass('active').siblings().removeClass('active');
+    
+    //判断文章管理 ，可以通过当前在兄弟间的索引
+    // if($(this).index() === 1)
     //如果是文章管理
     if($(this).next().hasClass('level02')) {
         // 则下滑列表
