@@ -53,6 +53,40 @@
             </table>
         </div>
     </div>
+
+    <!-- 模态框 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">文章类别管理</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                  <!-- 隐藏域 ，存储当前id值 -->
+                  <input type="hidden" id="cateId" name="id">
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label" id="articleName">文章名称:</label>
+                  <input type="text" class="form-control" id="recipient-name">
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label" id="cateName">文章类别:</label>
+                  <textarea class="form-control" id="message-text"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+              <button type="button" class="btn btn-primary" id="btn-confirm">确认</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</body>
     <!-- 模板--列表 -->
     <script type="text/html" id="tp">
         {{ each data}} 
@@ -60,8 +94,8 @@
                 <td>{{ $value.name }}</td>
                 <td>{{ $value.slug }}</td>
                 <td class="text-center">
-                    <a href="javascript:void(0)" data-id="{{ $value.id }}" data-toggle="modal" class=" btn btn-info btn-xs">编辑</a>
-                    <a href="javascript:void(0)" data-id="{{ $value.id }}" class="btn btn-danger btn-xs">删除</a>
+                    <a href="javascript:void(0)" data-id="{{ $value.id }}" data-toggle="modal" data-target="#myModal" class=" btn btn-info btn-xs">编辑</a>
+                    <a href="javascript:void(0)" data-id="{{ $value.id }}"  data-target="#myModal" class="btn btn-danger btn-xs" id="btn-delete">删除</a>
                 </td>
             </tr>
         {{ /each }}
