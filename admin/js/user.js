@@ -10,11 +10,21 @@ $(function() {
                     }else {
                         $('input.'+ k).val(res.data[k]);
                     }
-                    
-                    console.log(k+'-----------'+res.data[k])
                 }
             }
         }
+    });
+
+    // 默认隐藏文件域，用美观的图片指向 文件域
+    $('#exampleInputFile').hide
+    //文件选择 触发change事件
+    $('#exampleInputFile').on('change', function() {
+        console.dir(this.files[0]);
+        let fileImg = this.files[0];
+        // 上传图片的时候，文件对象 转为 图片url
+        let urlImg = window.URL.createObjectURL(fileImg);
+        $('img.user_pic').attr('src', urlImg);
+        
     });
 
 
