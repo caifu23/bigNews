@@ -1,4 +1,4 @@
-;(function(w) {
+; (function (w) {
     let baseUrl = 'http://localhost:8080/api/v1';
     let pathObj = {
         baseUrl: baseUrl,
@@ -24,30 +24,30 @@
         'comment_pass': baseUrl + '/admin/comment/pass',
         'comment_reject': baseUrl + '/admin/comment/reject',
         'comment_delete': baseUrl + '/admin/comment/delete'
-        
+
     }
     // 暴露接口
     w.pathObj = pathObj;
 
-   
-})(window)
-;(function() {
-    $.ajaxSetup({
-        // 方法一：发送前设置请求头token字段
-        headers: {
-            'Authorization': localStorage.getItem('token')
-        },
-        // 方法二：发送前设置请求头token字段
-        // beforeSend(xhr) {
-        //     xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-        // },
-        error(xhr,status,error) {
-            if(error == 'Forbidden') {
-                alert('请先登录');
-                // 跳转login
-                location.href = './login.html';
-            }
-        }
 
-    });
-})()
+})(window)
+    ; (function () {
+        $.ajaxSetup({
+            // 方法一：发送前设置请求头token字段
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            },
+            // 方法二：发送前设置请求头token字段
+            // beforeSend(xhr) {
+            //     xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            // },
+            error(xhr, status, error) {
+                if (error == 'Forbidden') {
+                    alert('请先登录');
+                    // 跳转login
+                    location.href = './login.html';
+                }
+            }
+
+        });
+    })()
