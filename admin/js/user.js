@@ -19,7 +19,7 @@ $(function() {
     $('#exampleInputFile').hide();
     //文件选择 触发change事件
     $('#exampleInputFile').on('change', function() {
-        console.dir(this.files[0]);
+        // console.dir(this.files[0]);
         let fileImg = this.files[0];
         // 上传图片的时候，文件对象 转为 图片url
         let urlImg = window.URL.createObjectURL(fileImg);
