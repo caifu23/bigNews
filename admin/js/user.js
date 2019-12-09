@@ -3,7 +3,17 @@ $(function() {
     $.get({
         url: pathObj.user_detail,
         success: function(res) {
-            console.log(res);
+            if(res.code === 200) {
+                for(var k in res.data) {
+                    if(k == 'userPic') {
+                        $('img.user_pic').attr('src',res.data[k]);
+                    }else {
+                        $('input.'+ k).val(res.data[k]);
+                    }
+                    
+                    console.log(k+'-----------'+res.data[k])
+                }
+            }
         }
     });
 
