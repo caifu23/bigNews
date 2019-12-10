@@ -30,6 +30,24 @@ $(function() {
         e.preventDefault();
         // 设置文章发布状态
         $('#state').val('已发布');
+        //发布
+        artRelease();
+
+    });
+
+    // 注册点击  存为草稿按钮
+    $('.btn-draft').on('click', function(e) {
+        // 阻止默认行为
+        e.preventDefault();
+        // 设置文章发布状态
+        $('#state').val('草稿');
+        //发布
+        artRelease();
+
+    });
+
+    // ajax请求
+    function artRelease() {
         // 获取表单数据
         let title = $('#inputTitle').val().trim();
     
@@ -52,13 +70,12 @@ $(function() {
             contentType: false,
             data: fd,
             success: function(res) {
-                console.log(res);
+                // console.log(res);
                 // 执行发布成功操作
             }
 
         });
-
-    });
+    }
 
 
 });
