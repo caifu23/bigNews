@@ -1,4 +1,8 @@
 $(function() {
+    // 定义当前页
+    let curPage  = 1;
+    // 显示条数
+
 
     // 获取文章类别列表
     $.get({
@@ -17,8 +21,8 @@ $(function() {
         // 阻止表单默认行为
         e.preventDefault();
         // ajax请求
-        getArticleList(1, function(totalPage, curPage) {
-            $('#pagination').twbsPagination('changeTotalPages', totalPage, curPage);
+        getArticleList(curPage, function(res) {
+            $('#pagination').twbsPagination('changeTotalPages', res.data.totalPage, 1);
         });
 
     });
@@ -30,7 +34,26 @@ $(function() {
 
     // 页面一加载，需要加载数据，触发
     // $('#btnSearch').trigger('click');
-    getArticleList(1, loadPagination);
+    getArticleList(curPage, function(res) {
+        
+        $('#pagination').twbsPagination({
+            totalPages: res.data.totalPage,
+            // startPage: startPage,
+            visiblePages: 6,
+            first: '首页',
+            prev: '上一页',
+            next: '下一页',
+            last: '尾页',
+            onPageClick: function (event, page) {
+                //如果点击的页数与当前页数不一致，则发送ajax请求 ？？？？？
+                // 更新当前页面
+                curPage = page;
+                // if (page != startPage) {
+                    getArticleList(curPage, null);
+                // };
+            }
+        });
+    });
 
     function getArticleList(curPage, callback) {
         $.get({
@@ -47,11 +70,24 @@ $(function() {
                     // 模板引擎渲染数据
                     $('.table>tbody').html(template('artList', res.data));
                     // 加载分页组件
-                    // loadPagination(res.data.totalPage, curPage);
                     // undefined == null  值一样
-                    if(callback != null) {
-                        callback(res.data.totalPage, curPage);
-                    }
+                    
+                    if(callback != null && res.data.data.length != 0) {
+                        $('#pagination').show();
+                        $('#tips').hide();
+                        callback(res);
+                        
+                    }else if(res.data.data.length <= 0 && curPage >1 ) {
+                        console.log('oh，页面数据获取等待。。。。。')
+                        getArticleList(curPage-1, function(res) {
+                            $('#pagination').twbsPagination('changeTotalPages', res.data.totalPage, curPage-1);
+                        });
+
+                    }else if(res.data.data.length <= 0){
+                        $('#pagination').hide();
+                        $('#tips').show();
+                    }  
+                    
                 }
             }
         });
@@ -69,7 +105,7 @@ $(function() {
          //(2)加载分页插件
          $('#pagination').twbsPagination({
              totalPages: totalPages,
-             startPage: startPage,
+            //  startPage: startPage,
              visiblePages: 6,
              first: '首页',
              prev: '上一页',
@@ -77,9 +113,11 @@ $(function() {
              last: '尾页',
              onPageClick: function (event, page) {
                  //如果点击的页数与当前页数不一致，则发送ajax请求
-                 if (page != startPage) {
+                 // 更新当前页面
+                 curPage = page;
+                //  if (page != startPage) {
                      getArticleList(page, null);
-                 };
+                //  };
              }
          });
     }
@@ -87,8 +125,6 @@ $(function() {
     // 删除文章
     // 删除按钮 动态生成，故 事件委托
     $('.table>tbody').on('click', 'a.delete', function() {
-        let curPage = $('#pagination li.active a').text();
-        // console.log(this)
         // 弹出提示
         let delValue = confirm('你确认删除该文章吗?');
         if(delValue) {
@@ -98,14 +134,14 @@ $(function() {
                     id: $(this).attr('data-id')
                 },
                 success: function(res) {
-                    console.log(res)
+                    // console.log(res)
                     if(res.code === 204) {
                         alert('删除成功');
-                        // 此处应该获取当前页数,再局部刷新数据
-                        // window.location.reload();
+                       
                         // 获取当前页,重新发起ajax请求
-                        getArticleList(curPage);
-                        // console.log(curPage)
+                        getArticleList(curPage, function(res) {
+                            $('#pagination').twbsPagination('changeTotalPages', res.data.totalPage, curPage);
+                        });
                     }else {
                         alert(res.msg);
                     }
