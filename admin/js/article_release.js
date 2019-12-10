@@ -42,9 +42,8 @@ $(function() {
         let fd = new FormData(form);
         // console.log(tinyMCE.activeEditor.getContent())
         //追加文章内容
-        // 插件加载不对
-        // fd.append('content', tinyMCE.activeEditor.getContent());
-        fd.append('content', 'nicai');
+        // 插件初始化数据
+        fd.append('content', tinyMCE.activeEditor.getContent());
 
         // 发送ajax
         $.post({
@@ -54,6 +53,7 @@ $(function() {
             data: fd,
             success: function(res) {
                 console.log(res);
+                // 执行发布成功操作
             }
 
         });
