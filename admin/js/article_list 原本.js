@@ -17,22 +17,13 @@ $(function() {
         // 阻止表单默认行为
         e.preventDefault();
         // ajax请求
-        getArticleList(1, function(totalPage, curPage) {
-            $('#pagination').twbsPagination('changeTotalPages', totalPage, curPage);
-        });
+        getArticleList(1);
 
     });
-    // changeTotalPages: function(totalPages, currentPage) {
-    //     this.options.totalPages = totalPages;
-    //     return this.show(currentPage);
-    // },
-
-
     // 页面一加载，需要加载数据，触发
-    // $('#btnSearch').trigger('click');
-    getArticleList(1, loadPagination);
+    $('#btnSearch').trigger('click');
 
-    function getArticleList(curPage, callback) {
+    function getArticleList(curPage) {
         $.get({
             url: window.pathObj.article_query,
             dataType: 'json',
@@ -47,11 +38,7 @@ $(function() {
                     // 模板引擎渲染数据
                     $('.table>tbody').html(template('artList', res.data));
                     // 加载分页组件
-                    // loadPagination(res.data.totalPage, curPage);
-                    // undefined == null  值一样
-                    if(callback != null) {
-                        callback(res.data.totalPage, curPage);
-                    }
+                    loadPagination(res.data.totalPage, curPage);
                 }
             }
         });
@@ -65,7 +52,7 @@ $(function() {
      */
     function loadPagination(totalPages, startPage) {
          //(1)先销毁上一次的分页数据
-        //  $('#pagination').twbsPagination('destroy');
+         $('#pagination').twbsPagination('destroy');
          //(2)加载分页插件
          $('#pagination').twbsPagination({
              totalPages: totalPages,
@@ -78,7 +65,7 @@ $(function() {
              onPageClick: function (event, page) {
                  //如果点击的页数与当前页数不一致，则发送ajax请求
                  if (page != startPage) {
-                     getArticleList(page, null);
+                     getArticleList(page);
                  };
              }
          });
@@ -105,7 +92,7 @@ $(function() {
                         // window.location.reload();
                         // 获取当前页,重新发起ajax请求
                         getArticleList(curPage);
-                        // console.log(curPage)
+                        console.log(curPage)
                     }else {
                         alert(res.msg);
                     }
