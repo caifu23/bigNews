@@ -70,8 +70,11 @@ $(function() {
             contentType: false,
             data: fd,
             success: function(res) {
-                // console.log(res);
+                console.log(res);
                 // 执行发布成功操作
+                if(res.code === 200) {
+                    window.location.href = './article_list.html';
+                }
             }
 
         });
