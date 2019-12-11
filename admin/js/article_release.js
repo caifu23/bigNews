@@ -16,7 +16,7 @@ $(function() {
 
     // 文件上传后，图片的预览
     $('#inputCover').on('change', function() {
-        // console.dir(this.files[0]);
+
         let fileImg = this.files[0];
         // 转url
         let urlImg = window.URL.createObjectURL(fileImg);
@@ -51,6 +51,11 @@ $(function() {
         // 获取表单数据
         let title = $('#inputTitle').val().trim();
         // 判断图片文件？
+        // 判断 文件域表单的 files.length
+        if($('#inputCover')[0].files.length === 0) {
+            alert('没有选择图片文件');
+            return;
+        }
         // 标题、文章内容？？？
     
         // 非空判断
@@ -72,7 +77,7 @@ $(function() {
             contentType: false,
             data: fd,
             success: function(res) {
-                // console.log(res);
+
                 // 执行发布成功操作
                 if(res.code === 200) {
                     //询问用户是否继续添加文章

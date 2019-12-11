@@ -50,4 +50,18 @@
             }
 
         });
+
+        // 监听页面关闭或刷新
+        
+        // window.addEventListener('beforeunload', function(e) {
+        //     console.log('真的要離開嗎？');//这里打断点，报错： Blocked alert('真的要離開嗎？') during beforeunload.
+        //     return '真的要離開嗎';
+        // })
+        // window.onbeforeunload = function(e){
+        //     var msg="真的要离开么？";
+        //     e.returnValue=msg;
+        //     return msg;
+        // };
+
+        
     })()

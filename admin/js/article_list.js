@@ -14,6 +14,7 @@ $(function() {
             }
         }
     });
+    
 
     // 获取文章列表数据
     // 按钮注册点击事件
@@ -38,7 +39,7 @@ $(function() {
         
         $('#pagination').twbsPagination({
             totalPages: res.data.totalPage,
-            // startPage: startPage,
+            startPage: curPage,
             visiblePages: 6,
             first: '首页',
             prev: '上一页',
@@ -47,10 +48,14 @@ $(function() {
             onPageClick: function (event, page) {
                 //如果点击的页数与当前页数不一致，则发送ajax请求 ？？？？？
                 // 更新当前页面
-                curPage = page;
-                // if (page != startPage) {
+                
+                // 此处可以省略当前页和点击页不一致的判断，
+                // 因为分页插件的页码在当前页是不可以点击的
+                // if (page != curPage) {
+                    curPage = page;
                     getArticleList(curPage, null);
                 // };
+                
             }
         });
     });
