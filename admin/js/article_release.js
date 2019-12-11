@@ -16,7 +16,7 @@ $(function() {
 
     // 文件上传后，图片的预览
     $('#inputCover').on('change', function() {
-        console.dir(this.files[0]);
+        // console.dir(this.files[0]);
         let fileImg = this.files[0];
         // 转url
         let urlImg = window.URL.createObjectURL(fileImg);
@@ -50,6 +50,8 @@ $(function() {
     function artRelease() {
         // 获取表单数据
         let title = $('#inputTitle').val().trim();
+        // 判断图片文件？
+        // 标题、文章内容？？？
     
         // 非空判断
         if(title == '') {
@@ -70,10 +72,17 @@ $(function() {
             contentType: false,
             data: fd,
             success: function(res) {
-                console.log(res);
+                // console.log(res);
                 // 执行发布成功操作
                 if(res.code === 200) {
-                    window.location.href = './article_list.html';
+                    //询问用户是否继续添加文章
+                    if(!confirm(res.msg +',是否留在当前页面继续添加文章？')){
+                        // 跳转到文章列表页
+                        location.href = './article_list.html';
+                    }else {
+                        // 清空表单数据
+                        form.reset();
+                    }
                 }
             }
 
