@@ -11,7 +11,11 @@
   <link rel="stylesheet" href="css/iconfont.css">
   <link rel="stylesheet" href="css/main.css">
   <script src="./libs/jquery-1.12.4.min.js"></script>
-  <script src="./libs/template-web.js"></script>
+  
+   <!-- 引入模板引擎js文件 -->
+   <script src="./libs/template-web.js"></script>
+   <!-- 分页插件 -->
+   <script src="./libs/jquery.twbsPagination.js"></script>
 </head>
 
 <body>
@@ -142,7 +146,7 @@
         </tbody>
       </table>
       <div class="row text-center">
-        <ul class="pagination pagination-sm">
+        <!-- <ul class="pagination pagination-sm">
           <li class="page-item first disabled"><a href="#" class="page-link">首页</a></li>
           <li class="page-item prev disabled"><a href="#" class="page-link">上一页</a></li>
           <li class="page-item active"><a href="#" class="page-link">1</a></li>
@@ -154,12 +158,67 @@
           <li class="page-item"><a href="#" class="page-link">7</a></li>
           <li class="page-item next"><a href="#" class="page-link">下一页</a></li>
           <li class="page-item last"><a href="#" class="page-link">尾页</a></li>
-        </ul>
+        </ul> -->
         <ul id="pagination" class="pagination-sm"></ul>
       </div>
 
     </div>
   </div>
 </body>
-
+<script type="text/html" id="commentTp">
+  {{ each data }}
+  
+    <tr class="{{if $value.state == '待审核'}}
+    danger
+  {{ /if }}">
+      <td>{{ $value.author }}</td>
+      <td>{{ $value.content }}</td>
+      <td>{{ $value.title }}</td>
+      <td>{{ $value.date }} {{ $value.time }}</td>
+      <td>
+        {{ if $value.state == '已通过' }}
+          已批准
+        {{ else }}
+          {{ $value.state }}
+        {{ /if }}
+      </td>
+      <td class="text-center">
+      {{if $value.state != '已拒绝'}}
+          <a href="javascript:void(0);;" data-id='{{ $value.id }}' class="btn 
+          {{if $value.state == '已拒绝'}}
+             
+          {{else if $value.state == '待审核'}}
+            btn-info
+          {{else}}
+            btn-warning
+          {{/if}} btn-xs">
+              {{if $value.state == '已通过' }}
+                拒绝
+              {{else if $value.state == '待审核' }}
+                批准
+              {{/if}}
+          </a>
+      {{ /if }}
+        
+        <a href="javascript:void(0);;" data-id='{{ $value.id }}' class="btn btn-danger btn-xs">删除</a>
+      </td>
+    </tr>
+  {{ /each }}
+</script>
+<!-- "待审核"
+"已拒绝"
+"已通过" -->
+<!-- 状态： 已批准 拒绝
+            待审核  批准
+            已拒绝  无 btn-warning
+          {{if flag == '1'}}
+            <span>123</span>
+        {{else if flag == "2"}}
+            <span>456</span>
+        {{else}}
+            <span>789</span>
+        {{/if}}
+          -->
+<script src="./libs/http.js"></script>
+<script src="./js/comment_list.js"></script>
 </html>
