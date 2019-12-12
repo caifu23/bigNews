@@ -81,13 +81,14 @@
             </div>
 
             <form action="" class="comment_form">
+                <input type="hidden" name="articleId" id="commentId">
                 <div class="form_group">
                     <label>用户名：</label>
-                    <input type="text" placeholder="请输入用户名" class="comment_name">
+                    <input type="text" placeholder="请输入用户名" name="author" class="comment_name">
                 </div>
                 <div class="form_group">
                     <label>评论内容：</label>
-                    <textarea placeholder="请发表您的评论" class="comment_input"></textarea>
+                    <textarea placeholder="请发表您的评论" name="content" class="comment_input"></textarea>
                 </div>
                 <div class="form_group">
                     <input type="submit" name="" value="评 论" class="comment_sub"></div>
@@ -98,7 +99,7 @@
             </div>
 
             <div class="comment_list_con">
-                <div class="comment_detail_list">
+                <!-- <div class="comment_detail_list">
                     <div class="person_pic fl">乔</div>
                     <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
                     <div class="comment_text fl">
@@ -125,7 +126,7 @@
                     <div class="comment_text fl">
                         遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="right_con setfl">
@@ -144,7 +145,7 @@
             <div class="common_wrap">
                 <h3><i class="fa fa-commenting-o"></i> 最新评论</h3>
                 <ul class="content_list comment_list">
-                    <li>
+                   <!--  <li>
                         <span>山</span>
                         <b><em>山治</em> 9个月前(08-14)说:</b>
                         <strong>挺会玩的</strong>
@@ -173,19 +174,19 @@
                         <span>乔</span>
                         <b><em>乔峰</em> 9个月前(08-14)说:</b>
                         <strong>挺会玩的</strong>
-                    </li>
-                </ul>
+                    </li>-->
+                </ul> 
             </div>
             <div class="common_wrap">
                 <h3><i class="fa fa-bullseye"></i> 焦点关注</h3>
                 <ul class="content_list guanzhu_list">
-                    <li><a href="#">神奇的水滴摄影，泡泡中的世界泡泡中的世界</a></li>
+                    
+                    <!-- <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
-                    <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
-                    <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
+                    <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li> -->
                 </ul>
             </div>
         </div>
@@ -208,6 +209,57 @@
     <!-- 引入模板引擎js文件 -->
     <script src="./js/template-web.js"></script>
     <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./js/article.js"></script>
+
+    <!-- 评论渲染模板 -->
+    <script type="text/html" id="commentList">
+        {{each data}}
+            {{ if $index < 4}}
+            <div class="comment_detail_list">
+                <div class="person_pic fl">{{$value.author.substr(0,1)}}</div>
+                <div class="name_time fl"><b>{{$value.author}}</b><span>{{$value.date}}</span></div>
+                <div class="comment_text fl">
+                    {{ $value.content}}
+                </div>
+            </div>
+            {{ /if }}
+        {{/each}}
+    </script>
+
+    <!-- 一周热门排行 -->
+    <script type="text/html" id="weekRank">
+        {{ each data }}
+            {{ if $index == 0 }}
+                <li><span class="first">{{$index +1}}</span><a href="./article.html?id={{$value.id}}">{{$value.title}}</a></li>
+            {{else if $index == 1}}
+                <li><span class="second">{{$index +1}}</span><a href="./article.html?id={{$value.id}}">{{$value.title}}</a></li>
+            {{else if $index == 2}}
+                <li><span class="third">{{$index +1}}</span><a href="./article.html?id={{$value.id}}">{{$value.title}}</a></li>
+            {{else }}
+                <li><span>{{$index +1}}</span><a href="./article.html?id={{$value.id}}">{{$value.title}}</a></li>
+            {{ /if}}
+        {{ /each }}
+    </script>
+
+    <!-- 最新评论 -->
+    <script type="text/html" id="recentNew">  
+    {{ each data}}
+        
+        <li>
+            <span> {{ $value.author.substr(0,1) }}</span>
+            <b><em>{{$value.author}}</em> 9个月前({{$value.date.substr(5,5)}})说:</b>
+            <strong>{{$value.intro}}</strong>
+        </li>
+        
+    {{ /each}}
+    </script>
+
+    <!-- 焦点关注 -->
+    <script type="text/html" id="focusList">
+        {{ each data}}
+            <li><a href="#">{{ $value.intro}}</a></li>
+        {{ /each}}
+    </script>
 
 </body>
 
