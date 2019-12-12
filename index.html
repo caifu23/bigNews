@@ -150,19 +150,19 @@
             <div class="common_wrap">
                 <h3><i class="fa fa-bar-chart"></i> 一周热门排行</h3>
                 <ul class="content_list hotrank_list">
-                    <li><span class="first">1</span><a href="#">神奇的水滴摄影，泡泡中的世界泡泡中的世界</a></li>
+                    <!-- <li><span class="first">1</span><a href="#">神奇的水滴摄影，泡泡中的世界泡泡中的世界</a></li>
                     <li><span class="second">2</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><span class="third">3</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><span>4</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><span>5</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><span>6</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
-                    <li><span>7</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
+                    <li><span>7</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li> -->
                 </ul>
             </div>
             <div class="common_wrap">
                 <h3><i class="fa fa-commenting-o"></i> 最新评论</h3>
                 <ul class="content_list comment_list">
-                    <li>
+                    <!-- <li>
                         <span>山</span>
                         <b><em>山治</em> 9个月前(08-14)说:</b>
                         <strong>挺会玩的</strong>
@@ -191,19 +191,19 @@
                         <span>乔</span>
                         <b><em>乔峰</em> 9个月前(08-14)说:</b>
                         <strong>挺会玩的</strong>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <div class="common_wrap">
                 <h3><i class="fa fa-bullseye"></i> 焦点关注</h3>
                 <ul class="content_list guanzhu_list">
-                    <li><a href="#">神奇的水滴摄影，泡泡中的世界泡泡中的世界</a></li>
+                    <!-- <li><a href="#">神奇的水滴摄影，泡泡中的世界泡泡中的世界</a></li>
                     <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
-                    <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
+                    <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li> -->
                 </ul>
             </div>
         </div>
@@ -258,6 +258,41 @@
                     <b>发布于 {{$value.date}}</b>
                 </div>
             </div>
+        {{ /each}}
+    </script>
+
+     <!-- 一周热门排行 -->
+     <script type="text/html" id="weekRank">
+        {{ each data }}
+            {{ if $index == 0 }}
+                <li><span class="first">{{$index +1}}</span><a href="./article.html?id={{$value.id}}">{{$value.title}}</a></li>
+            {{else if $index == 1}}
+                <li><span class="second">{{$index +1}}</span><a href="./article.html?id={{$value.id}}">{{$value.title}}</a></li>
+            {{else if $index == 2}}
+                <li><span class="third">{{$index +1}}</span><a href="./article.html?id={{$value.id}}">{{$value.title}}</a></li>
+            {{else }}
+                <li><span>{{$index +1}}</span><a href="./article.html?id={{$value.id}}">{{$value.title}}</a></li>
+            {{ /if}}
+        {{ /each }}
+    </script>
+
+    <!-- 最新评论 -->
+    <script type="text/html" id="recentNew">  
+    {{ each data}}
+        
+        <li>
+            <span> {{ $value.author.substr(0,1) }}</span>
+            <b><em>{{$value.author}}</em> 9个月前({{$value.date.substr(5,5)}})说:</b>
+            <strong>{{$value.intro}}</strong>
+        </li>
+        
+    {{ /each}}
+    </script>
+
+    <!-- 焦点关注 -->
+    <script type="text/html" id="focusList">
+        {{ each data}}
+            <li><a href="#">{{ $value.intro}}</a></li>
         {{ /each}}
     </script>
 </body>
