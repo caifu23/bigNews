@@ -47,7 +47,7 @@ $(function() {
             dataType: 'json',
             data: {
                 page: curPage,
-                perpage: 10
+                perpage: 11
             },
             success: function(res) {
                 if(res.code === 200) {
@@ -63,7 +63,7 @@ $(function() {
                         
                     }else if(res.data.data.length <= 0 && curPage >1 ) {
                         console.log('oh，页面数据获取等待。。。。。')
-                        getArticleList(curPage-1, function(res) {
+                        getComment(curPage-1, function(res) {
                             $('#pagination').twbsPagination('changeTotalPages', res.data.totalPage, curPage-1);
                         });
 
@@ -89,9 +89,7 @@ $(function() {
                 success: function(res) {
                     if(res.code === 200) {
                         // 刷新当前页数据
-                        getComment(curPage, function(res) {
-                            $('#pagination').twbsPagination('changeTotalPages', res.data.totalPage, curPage);
-                        });
+                        getComment(curPage, null);
                     }else {
                         alert(res.msg);
                     }
@@ -112,9 +110,7 @@ $(function() {
                 if(res.code === 200) {
                     // console.log(res)
                     // 刷新当前页数据
-                    getComment(curPage, function(res) {
-                        $('#pagination').twbsPagination('changeTotalPages', res.data.totalPage, curPage);
-                    });
+                    getComment(curPage, null);
                 }else {
                     alert(res.msg);
                 }
@@ -133,9 +129,7 @@ $(function() {
             success: function(res) {
                 // console.log(res)
                 if(res.code === 200) {
-                    getComment(curPage, function(res) {
-                        $('#pagination').twbsPagination('changeTotalPages', res.data.totalPage, curPage);
-                    });
+                    getComment(curPage, null);
                 }else {
                     alert(res.msg);
                 }
